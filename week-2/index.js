@@ -14,12 +14,20 @@ function sum(counter) {
 }
 
 // / declares the route we are referring too
+// req is used to pass data to an express server
 
 app.get("/handle", (req, res) => {
-  let calculatedAns = sum(800);
+  var counter = req.query.counter;
+  let calculatedAns = sum(counter);
   let calculate = "The answer is: " + calculatedAns;
   res.send(calculate);
 });
+
+function createUser(req, res) {
+  res.send("helllo world");
+}
+
+app.post("/createuser", createUser);
 
 // i will start listening on this port for incoming requests
 app.listen(port, () => {
