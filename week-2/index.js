@@ -29,7 +29,7 @@ function Multiply(counter) {
 
 function handleRequest(req, res) {
   // console.log(req.body);
-  var counter = req.body.counter;
+  var counter = req.query.counter;
   // if (counter < 100000) {
   // var count = req.headers.count;
   let calculatedAns = sum(counter);
@@ -42,8 +42,13 @@ function handleRequest(req, res) {
 
   res.status(200).send(answerObj);
 }
+//sending HTML
+function givePage(req, res) {
+  res.sendFile(__dirname + "/index.html");
+}
 
-app.post("/handle", handleRequest);
+app.get("/handle", handleRequest);
+app.get("/", givePage);
 
 function createUser(req, res) {
   res.send("helllo world");
