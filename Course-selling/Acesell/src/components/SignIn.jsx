@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function SignUp() {
+export function SignIn() {
   const [isNightMode, setIsNightMode] = useState(false);
 
   const toggleNightMode = () => {
@@ -17,7 +17,7 @@ export function SignUp() {
         <p
           className={`text-sm ${isNightMode ? "text-white" : "text-gray-800"}`}
         >
-          Welcome to Aceshell. Please sign up to continue.
+          Welcome to Aceshell. Please sign In to continue.
         </p>
       </div>
       <div
@@ -34,7 +34,7 @@ export function SignUp() {
             isNightMode ? "gray-800" : "blue-500"
           } text-white py-8 text-center`}
         >
-          <h1 className="text-xl font-bold">Sign Up</h1>
+          <h1 className="text-xl font-bold">Sign In</h1>
         </div>
         <div className="p-4 md:p-6">
           <div className="mb-4">
@@ -77,7 +77,7 @@ export function SignUp() {
               isNightMode ? "gray-900" : "blue-600"
             } transition duration-300 ease-in-out transform hover:scale-105`}
           >
-            Sign Up
+            Sign In
           </button>
         </div>
       </div>
