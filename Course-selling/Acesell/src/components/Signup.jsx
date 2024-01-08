@@ -1,7 +1,10 @@
 import { useState } from "react";
+import axios from "axios";
 
 export function SignUp() {
   const [isNightMode, setIsNightMode] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const toggleNightMode = () => {
     setIsNightMode((prevMode) => !prevMode);
@@ -51,6 +54,7 @@ export function SignUp() {
               } focus:outline-none focus:ring focus:border-${
                 isNightMode ? "gray-500" : "blue-500"
               } transition duration-300 ease-in-out`}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -67,6 +71,7 @@ export function SignUp() {
               } focus:outline-none focus:ring focus:border-${
                 isNightMode ? "gray-500" : "blue-500"
               } transition duration-300 ease-in-out`}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button
@@ -76,6 +81,18 @@ export function SignUp() {
             } text-white py-2 rounded hover:bg-${
               isNightMode ? "gray-900" : "blue-600"
             } transition duration-300 ease-in-out transform hover:scale-105`}
+            onClick={async () => {
+              const response = await axios.post(
+                "http://localhost:3000/admin/signup",
+                {
+                  username: email,
+                  password: password,
+                }
+              );
+              let data = response.data;
+              localStorage.setItem("token", data.token);
+              window.location.href = "/";
+            }}
           >
             Sign Up
           </button>

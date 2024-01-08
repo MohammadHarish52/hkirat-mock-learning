@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export function AppBar({ isNightMode, onToggleNightMode }) {
+  const navigate = useNavigate();
   return (
     <div className={`bg-blue-500 p-4 flex justify-between items-center`}>
       <div className="flex items-center space-x-4">
@@ -7,11 +10,17 @@ export function AppBar({ isNightMode, onToggleNightMode }) {
       <div className="flex items-center space-x-2">
         <button
           className={`px-4 py-2 rounded bg-blue-200 text-blue-800 hover:bg-blue-300 transition duration-300 ease-in-out`}
+          onClick={() => {
+            navigate("/signup");
+          }}
         >
           Sign Up
         </button>
         <button
           className={`px-4 py-2 rounded bg-blue-200 text-blue-800 hover:bg-blue-300 transition duration-300 ease-in-out`}
+          onClick={() => {
+            navigate("/signin");
+          }}
         >
           Sign In
         </button>
