@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    function addtodo() {
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const wrapper = document.getElementById("wrapper");
+
+      const newtask = document.createElement("div");
+      const newtastTile = document.createElement("div");
+      newtastTile.innerHTML = title;
+
+      const newtastdescription = document.createElement("div");
+      newtastdescription.innerHTML = description;
+
+      const btn = document.createElement("button");
+      btn.innerHTML = "MArkDown";
+
+      newtask.appendChild(newtastTile);
+      newtask.appendChild(newtastdescription);
+      newtask.appendChild(btn);
+      wrapper.appendChild(newtask);
+    }
+  </script>
+
+  <body>
+    <div id="wrapper">
+      <input id="title" type="text" name="title" />
+      <br />
+      <input id="description" type="text" name="Description" />
+      <br />
+      <button onclick="addtodo()">Add todo</button>
+    </div>
+  </body>
+</html>

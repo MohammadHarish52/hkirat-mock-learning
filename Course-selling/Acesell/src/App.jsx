@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/Signup";
 import { AppBar } from "./components/AppBar";
+import AddCourse from "./components/AddCourse";
 
 function App() {
   const [isNightMode, setIsNightMode] = useState(false);
@@ -30,8 +31,10 @@ function App() {
         >
           <Routes>
             {" "}
+            <Route path="/" element={<Home />} />
             <Route path="/signin" Component={SignIn} />
             <Route path="/signup" Component={SignUp} />
+            <Route path="/Addcourse" Component={AddCourse} />
             {/* Add more routes for other pages if needed */}
           </Routes>
         </div>
@@ -39,4 +42,10 @@ function App() {
     </Router>
   );
 }
+
+function Home() {
+  // You can render your home component here
+  return <h1>Welcome to Aceshell Home!</h1>;
+}
+
 export default App;
