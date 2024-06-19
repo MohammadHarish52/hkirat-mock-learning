@@ -13,15 +13,11 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield prisma.user.findUnique({
+        const user = yield prisma.user.delete({
             where: {
-                id: 2,
-            },
-            include: {
-                posts: true,
+                id: 1,
             },
         });
-        console.log(user);
     });
 }
 main();

@@ -1,15 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
 async function main() {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.delete({
     where: {
-      id: 2,
-    },
-    include: {
-      posts: true,
+      id: 1,
     },
   });
-  console.log(user);
 }
 main();
