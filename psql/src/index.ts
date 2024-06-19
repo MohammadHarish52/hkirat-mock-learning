@@ -3,8 +3,7 @@ import { Client } from "pg";
 // Async function to create the users table in the database
 
 const client = new Client({
-  connectionString:
-    "postgresql://neondb_owner:YG7pwdJUuI1h@ep-nameless-glitter-a52yw7go.us-east-2.aws.neon.tech/neondb?sslmode=require",
+  connectionString: `${process.env.DB_URI}`,
 });
 
 async function createUserTable() {
@@ -29,8 +28,7 @@ async function createUserTable() {
 
 async function insertUserData() {
   const client = new Client({
-    connectionString:
-      "postgresql://neondb_owner:YG7pwdJUuI1h@ep-nameless-glitter-a52yw7go.us-east-2.aws.neon.tech/neondb?sslmode=require",
+    connectionString: `${process.env.DB_URI}`,
   });
 
   await client.connect();
@@ -51,8 +49,7 @@ async function insertUserData() {
 // Async function to fetch user data from the database given an email
 async function getUser(email: string) {
   const client = new Client({
-    connectionString:
-      "postgresql://neondb_owner:YG7pwdJUuI1h@ep-nameless-glitter-a52yw7go.us-east-2.aws.neon.tech/neondb?sslmode=require",
+    connectionString: `${process.env.DB_URI}`,
   });
 
   try {
