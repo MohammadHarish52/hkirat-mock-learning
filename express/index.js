@@ -4,61 +4,27 @@ const app = express();
 
 app.use(express.json());
 
-const users = [
-  {
-    name: "Harish",
-    kidneys: [
-      {
-        healthy: false,
-      },
-    ],
-  },
-];
+app.get("/healthy-check", (req, res) => {
+  const kidneyId = req.query.kidneyId;
+  const username = req.headers.username;
+  const password = req.headers.password;
 
-app.get("/", (req, res) => {
-  const johKidneys = users[0].kidneys;
-  const numOfKidneys = johKidneys.length;
-  let healthyKidneys = 0; // Use let instead of const to allow reassignment
-  for (let i = 0; i < numOfKidneys; i++) {
-    if (johKidneys[i].healthy) {
-      healthyKidneys += 1;
-    }
+  if (kidneyId != 1 && kidneyId != 2) {
+    res.json({
+      message: "wrong inputs",
+    });
+    return;
   }
-  const unhealthyKidneys = numOfKidneys - healthyKidneys;
-  console.log(healthyKidneys);
 
-  res.json({
-    numOfKidneys,
-    healthyKidneys,
-    unhealthyKidneys,
-  });
-});
-
-app.post("/", (req, res) => {
-  const isHealthy = req.body.isHealthy;
-  users[0].kidneys.push({
-    healthy: isHealthy,
-  });
-
-  res.json({
-    message: "Done",
-  });
-});
-
-app.put("/", (req, res) => {
-  for (let i = 0; i < users[0].kidneys.length; i++) {
-    users[0].kidneys[i].healthy = true;
+  if (username != "Harish" && password != "pass123") {
+    res.json({
+      message: "wrong user",
+    });
+    return;
   }
-  res.json({});
-});
-
-app.delete("/", (req, res) => {
-  users[0].kidneys = users[0].kidneys.filter(
-    (kidney) => kidney.healthy === true
-  );
-  res.json({ message: "DELETE request received" });
+  res.send("your heart is healthy");
 });
 
 app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+  console.log("server is running on 3000");
 });
