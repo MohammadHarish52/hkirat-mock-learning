@@ -4,10 +4,20 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/healthy-check", (req, res) => {
-  const kidneyId = req.query.kidneyId;
+const userMiddleWare = (req, res, next) => {
   const username = req.headers.username;
   const password = req.headers.password;
+  if (username != "Harish" && password != "pass123") {
+    res.json({
+      message: "wrong user",
+    });
+    return;
+  }
+  next();
+};
+
+const kidneyMiddleWare = (req, res, next) => {
+  const kidneyId = req.query.kidneyId;
 
   if (kidneyId != 1 && kidneyId != 2) {
     res.json({
@@ -15,13 +25,10 @@ app.get("/healthy-check", (req, res) => {
     });
     return;
   }
+  next();
+};
 
-  if (username != "Harish" && password != "pass123") {
-    res.json({
-      message: "wrong user",
-    });
-    return;
-  }
+app.get("/healthy-check", userMiddleWare, kidneyMiddleWare, (req, res) => {
   res.send("your heart is healthy");
 });
 
