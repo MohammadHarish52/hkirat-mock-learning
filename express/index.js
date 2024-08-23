@@ -1,44 +1,65 @@
 import express from "express";
+import { z } from "zod";
+
+const schema = z.object({
+  username: z.string(),
+  password: z.string(),
+});
 
 const app = express();
 
 app.use(express.json());
 
 const userMiddleWare = (req, res, next) => {
-  const username = req.headers.username;
-  const password = req.headers.password;
-  if (username != "Harish" && password != "pass123") {
-    res.json({
-      message: "wrong user",
+  const user = {
+    username: req.headers.username,
+    password: req.headers.password,
+  };
+
+  const response = schema.safeParse(user);
+
+  if (!response.success) {
+    // If validation fails, return an error message
+    return res.status(400).json({
+      message: "Invalid input",
+      errors: response.error.errors,
     });
-    return;
   }
+
+  const { username, password } = response.data;
+
+  if (username !== "Harish" || password !== "pass123") {
+    return res.status(401).json({
+      message: "Wrong user",
+    });
+  }
+
   next();
 };
 
 const kidneyMiddleWare = (req, res, next) => {
-  const kidneyId = req.query.kidneyId;
+  const kidneyId = parseInt(req.query.kidneyId, 10);
 
-  if (kidneyId != 1 && kidneyId != 2) {
-    res.json({
-      message: "wrong inputs",
+  if (kidneyId !== 1 && kidneyId !== 2) {
+    return res.status(400).json({
+      message: "Wrong inputs",
     });
-    return;
   }
+
   next();
 };
 
 app.get("/healthy-check", userMiddleWare, kidneyMiddleWare, (req, res) => {
-  res.send("your heart is healthy");
+  res.send("Your heart is healthy");
 });
 
-// global cathces
-app.use(function (err, req, res, next) {
-  res.send({
-    msg: "Sorry something is wrong with the server",
+// Global error handler
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    message: "Sorry, something is wrong with the server",
   });
 });
 
 app.listen(3000, () => {
-  console.log("server is running on 3000");
+  console.log("Server is running on port 3000");
 });
