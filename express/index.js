@@ -32,6 +32,13 @@ app.get("/healthy-check", userMiddleWare, kidneyMiddleWare, (req, res) => {
   res.send("your heart is healthy");
 });
 
+// global cathces
+app.use(function (err, req, res, next) {
+  res.send({
+    msg: "Sorry something is wrong with the server",
+  });
+});
+
 app.listen(3000, () => {
   console.log("server is running on 3000");
 });
