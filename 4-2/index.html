@@ -7,8 +7,9 @@
     <style>
       body {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
         height: 100vh;
         margin: 0;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -22,6 +23,7 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         max-width: 400px;
         width: 100%;
+        margin-bottom: 20px;
       }
 
       .todo-container h1 {
@@ -66,29 +68,54 @@
       .todo-container button:active {
         background-color: #003f7f;
       }
+
+      #todo {
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .todo-item {
+        background: #fff;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .todo-item h1 {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+      }
+
+      .todo-item p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .todo-item button {
+        padding: 8px 12px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      .todo-item button:hover {
+        background-color: #218838;
+        box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
+      }
+
+      .todo-item button:active {
+        background-color: #1e7e34;
+      }
     </style>
   </head>
   <body>
-    <script>
-      function addTodo() {
-        const title = document.getElementById("title").value;
-        const description = document.getElementById("description").value;
-        const todo = document.getElementById("todo");
-
-        const titleh1 = document.createElement("h1");
-        titleh1.innerHTML = `${title}`;
-
-        const descriptionp = document.createElement("p");
-        descriptionp.innerHTML = `${description}`;
-
-        const button = document.createElement("button");
-        button.innerHTML = `Mark as done`;
-
-        todo.appendChild(titleh1);
-        todo.appendChild(descriptionp);
-        todo.appendChild(button);
-      }
-    </script>
     <div class="todo-container">
       <h1>Add a Todo</h1>
       <input type="text" id="title" placeholder="Title" />
@@ -96,10 +123,60 @@
       <button onclick="addTodo()">Add Todo</button>
     </div>
     <div id="todo"></div>
-    <!-- <div>
-      <div>Title</div>
-      <div>Description</div>
-      <button>Mark as done</button>
-    </div> -->
+    <script>
+      let todos = [
+        {
+          id: 22,
+          titile: "hello",
+          description: "hahhhshs",
+        },
+      ]; // State to store all todos
+      let idCounter = 1;
+
+      function addTodo() {
+        updateDomAccordingToState(todos);
+
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        todos.push({ id: idCounter++, title, description });
+
+        // Clear the input fields after adding the todo
+        document.getElementById("title").value = "";
+        document.getElementById("description").value = "";
+      }
+
+      function updateDomAccordingToState(state) {
+        const todoContainer = document.getElementById("todo");
+        todoContainer.innerHTML = ""; // Clear previous content
+
+        state.forEach((todo) => {
+          createTodo(todo.title, todo.description, todo.id);
+        });
+      }
+
+      function createTodo(title, description, id) {
+        const todoContainer = document.getElementById("todo");
+
+        const todoItem = document.createElement("div");
+        todoItem.classList.add("todo-item");
+        todoItem.setAttribute("id", `todo-${id}`);
+
+        const titleh1 = document.createElement("h1");
+        titleh1.textContent = title;
+
+        const descriptionp = document.createElement("p");
+        descriptionp.textContent = description;
+
+        const button = document.createElement("button");
+        button.textContent = "Mark as done";
+
+        todoItem.appendChild(titleh1);
+        todoItem.appendChild(descriptionp);
+        todoItem.appendChild(button);
+
+        todoContainer.appendChild(todoItem);
+      }
+    </script>
   </body>
 </html>
