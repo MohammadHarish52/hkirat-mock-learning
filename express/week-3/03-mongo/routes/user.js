@@ -46,13 +46,62 @@ router.get("/courses", async (req, res) => {
   res.json(courses);
 });
 
-router.post("/courses/:courseId", userMiddleware, (req, res) => {
+router.post("/courses/:courseId", userMiddleware, async (req, res) => {
   // Implement course purchase logic
-  const { username, password } = req.headers;
+  const { username } = req.headers;
+  const id = req.params.courseId;
+
+  const user = await User.updateOne(
+    {
+      username: username,
+    },
+    {
+      $push: {
+        purchasedCourses: id,
+      },
+    }
+  );
+
+  res.json({
+    msg: "Course purchased succesfully",
+    id: id,
+  });
 });
 
-router.get("/purchasedCourses", userMiddleware, (req, res) => {
-  // Implement fetching purchased courses logic
+router.get("/purchasedCourses", userMiddleware, async (req, res) => {
+  try {
+    const { username } = req.headers;
+
+    // Fetch user
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res.status(404).json({
+        msg: "User not found",
+      });
+    }
+
+    // Check if user has purchased courses
+    if (!user.purchasedCourses || user.purchasedCourses.length === 0) {
+      return res.status(404).json({
+        msg: "No purchased courses found",
+      });
+    }
+
+    // Fetch courses based on purchased course IDs
+    const courses = await Course.find({
+      _id: { $in: user.purchasedCourses }, // Use $in to handle multiple IDs
+    });
+
+    res.status(200).json({
+      courses: courses,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "Internal server error",
+      error: e.message,
+    });
+  }
 });
 
 module.exports = router;
