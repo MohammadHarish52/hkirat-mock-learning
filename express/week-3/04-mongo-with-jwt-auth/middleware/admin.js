@@ -7,6 +7,14 @@ function adminMiddleware(req, res, next) {
   // get the token
   const actualToken = token.split(" ");
   const jwtToken = actualToken[1];
+  const decoded = jwt.verify(jwtToken, secret);
+  if (decoded.username) {
+    next();
+  } else {
+    res.json({
+      msg: "user not authenticated",
+    });
+  }
 }
 
 module.exports = adminMiddleware;
