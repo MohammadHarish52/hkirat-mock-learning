@@ -2,23 +2,31 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  // this causes ren renders in both the children componet
-  const [name, setName] = useState("harish");
+  // fix moving the state down
 
-  const handleClick = () => {
-    const randomValue = Math.random();
-    setName(randomValue);
-  };
   return (
     <>
-      <button onClick={handleClick}>Click to update me</button>
-      <Header name={name} /> <Header name="kran" />
+      <HeaderTwo title="chick" />
+      <Header />
     </>
   );
 }
 
 export default App;
 
-function Header({ name }) {
-  return <div>My name is {name}</div>;
+function Header() {
+  const [name, setName] = useState("harish");
+  const handleClick = () => {
+    const randomValue = Math.random();
+    setName(randomValue);
+  };
+  return (
+    <div>
+      <button onClick={handleClick}>Click to update me</button>My name is {name}
+    </div>
+  );
+}
+
+function HeaderTwo({ title }) {
+  return <div>My name is {title}</div>;
 }
