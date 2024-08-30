@@ -4,9 +4,30 @@ const CreateTodo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle todo creation here
+
+    try {
+      const response = await fetch("http://localhost:3000/todo", {
+        method: "POST",
+        body: JSON.stringify({
+          title: title,
+          description: description,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Todo created:", data);
+    } catch (error) {
+      console.error("Error creating todo:", error);
+    }
   };
 
   return (

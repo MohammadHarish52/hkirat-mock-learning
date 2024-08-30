@@ -1,6 +1,6 @@
 import React from "react";
 
-const Todos = ({ todos }) => {
+const Todos = ({ todos, onDelete, onMarkAsCompleted }) => {
   if (!todos || todos.length === 0) {
     return (
       <div className="text-center text-white mt-8">
@@ -14,11 +14,20 @@ const Todos = ({ todos }) => {
       {todos.map((todo) => (
         <div
           key={todo._id}
-          className="bg-black border border-white rounded-lg mb-4 p-4 transition-all hover:bg-zinc-800 hover:text-white"
+          className="bg-black border text-white border-white rounded-lg mb-4 p-4 transition-all hover:bg-zinc-800 hover:text-white"
         >
           <h2 className="text-xl font-semibold mb-2">{todo.title}</h2>
           <p className="mb-4">{todo.description}</p>
-          <button className="bg-black text-white rounded-md hover:bg-zinc-800 py-2 px-4   border border-white transition-colors duration-300">
+          <button
+            className="bg-black text-white rounded-md hover:bg-zinc-800 py-2 px-4 border border-white transition-colors duration-300"
+            onClick={() => onDelete(todo._id)}
+          >
+            Delete
+          </button>
+          <button
+            className="bg-black text-white rounded-md hover:bg-zinc-800 py-2 px-4 ml-4 border border-white transition-colors duration-300"
+            onClick={() => onMarkAsCompleted(todo._id)}
+          >
             Mark as Completed
           </button>
         </div>

@@ -95,6 +95,29 @@ app.put("/completed", async (req, res) => {
   }
 });
 
+app.delete("/todo/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await todoModel.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({
+        msg: "Todo not found",
+      });
+    }
+
+    res.status(200).json({
+      msg: "Todo deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Error deleting todo",
+      error: error.message,
+    });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
