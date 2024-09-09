@@ -1,32 +1,33 @@
-import { useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function App() {
-  // fix moving the state down
+  const [title, setTitle] = useState("my name is harkirat");
 
-  return (
-    <>
-      <HeaderTwo title="chick" />
-      <Header />
-    </>
-  );
-}
+  function updateTitle() {
+    setTitle("my name is " + Math.random());
+  }
 
-export default App;
-
-function Header() {
-  const [name, setName] = useState("harish");
-  const handleClick = () => {
-    const randomValue = Math.random();
-    setName(randomValue);
-  };
   return (
     <div>
-      <button onClick={handleClick}>Click to update me</button>My name is {name}
+      <button onClick={updateTitle}>Update the title</button>
+      <Header title={title} />
+      <Header title="harkirat2" />
+      <Header title="harkirat2" />
+      <Header title="harkirat2" />
+      <Header title="harkirat2" />
+      <Header title="harkirat2" />
+      <Header title="harkirat2" />
     </div>
   );
 }
 
-function HeaderTwo({ title }) {
-  return <div>My name is {title}</div>;
-}
+const Header = React.memo(function Header({ title }) {
+  return <div>{title}</div>;
+});
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};
+
+export default App;
