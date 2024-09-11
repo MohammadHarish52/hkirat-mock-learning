@@ -1,43 +1,36 @@
-import PropTypes from "prop-types"; // Make sure to capitalize 'PropTypes'
+import { useEffect, useState } from "react";
 import "./App.css";
+
 const App = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://sum-server.100xdevs.com/todos");
+        const result = await response.json(); // Await response.json() to resolve the promise
+        setData(result); // Store the fetched data in state
+      } catch (e) {
+        console.log("Error fetching data:", e.message);
+      }
+    };
+
+    fetchData();
+  }, []); // Add an empty dependency array to run only on mount
+
   return (
     <div>
-      <CardWrapper>
-        <TextComponent />
-      </CardWrapper>
-      <CardWrapper>
-        {" "}
-        <TextComponent2 />
-      </CardWrapper>
+      {data.length > 0 ? (
+        <ul>
+          {data.map((item) => (
+            <li key={item.id}>{item.title}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p> // Show a loading message while data is being fetched
+      )}
     </div>
   );
-};
-
-const TextComponent = () => {
-  return <div>hey</div>;
-};
-const TextComponent2 = () => {
-  return <div>hey4</div>;
-};
-
-// Fixed the component name and propTypes validation
-const CardWrapper = ({ children }) => {
-  return (
-    <div
-      style={{
-        border: "2px solid black",
-        padding: "40px",
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Use PropTypes.node to validate children
-CardWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default App;
