@@ -1,33 +1,43 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-
-function App() {
-  const [title, setTitle] = useState("my name is harkirat");
-
-  function updateTitle() {
-    setTitle("my name is " + Math.random());
-  }
-
+import PropTypes from "prop-types"; // Make sure to capitalize 'PropTypes'
+import "./App.css";
+const App = () => {
   return (
     <div>
-      <button onClick={updateTitle}>Update the title</button>
-      <Header title={title} />
-      <Header title="harkirat2" />
-      <Header title="harkirat2" />
-      <Header title="harkirat2" />
-      <Header title="harkirat2" />
-      <Header title="harkirat2" />
-      <Header title="harkirat2" />
+      <CardWrapper>
+        <TextComponent />
+      </CardWrapper>
+      <CardWrapper>
+        {" "}
+        <TextComponent2 />
+      </CardWrapper>
     </div>
   );
-}
+};
 
-const Header = React.memo(function Header({ title }) {
-  return <div>{title}</div>;
-});
+const TextComponent = () => {
+  return <div>hey</div>;
+};
+const TextComponent2 = () => {
+  return <div>hey4</div>;
+};
 
-Header.propTypes = {
-  title: PropTypes.string.isRequired,
+// Fixed the component name and propTypes validation
+const CardWrapper = ({ children }) => {
+  return (
+    <div
+      style={{
+        border: "2px solid black",
+        padding: "40px",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+// Use PropTypes.node to validate children
+CardWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default App;
