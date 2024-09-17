@@ -1,49 +1,28 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
-function App() {
-  const [id, setId] = useState(0);
+const App = () => {
+  const [number, setNumber] = useState(0);
+  const [count, setCount] = useState(0);
 
-  const handleOnclick = (newId) => {
-    setId(newId);
-  };
-  return (
-    <div>
-      <button onClick={() => handleOnclick(1)}>1</button>
-      <button onClick={() => handleOnclick(2)}>2</button>
-      <button onClick={() => handleOnclick(3)}>3</button>
-      <button onClick={() => handleOnclick(4)}>4</button>
-      <Todo id={id} />
-    </div>
-  );
-}
+  let sum = 0;
 
-function Todo({ id }) {
-  const [todo, setTodo] = useState(null);
-
-  // implement effect here
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/todo?id=${id}`) // Ensure this URL is correct
-      .then((response) => {
-        setTodo(response.data.todo); // Set the todo data
-      })
-      .catch((error) => {
-        console.error("Error fetching todo:", error);
-      });
-  }, [id]); // Add `id` to the dependency array
-
-  // Render loading state until data is fetched
-  if (!todo) {
-    return <div>Loading...</div>;
+  for (let i = 0; i <= number; i++) {
+    sum = i + sum;
   }
-
   return (
     <div>
-      <h1>{todo.title}</h1>
-      <h4>{todo.description}</h4>
+      <input
+        type="number"
+        value={number}
+        onChange={(e) => setNumber(e.target.value)}
+      />
+      <h1>Sum is {sum}</h1>
+
+      <button value={count} onClick={() => setCount((e) => e + 1)}>
+        count is ({count})
+      </button>
     </div>
   );
-}
+};
 
 export default App;
