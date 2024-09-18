@@ -1,35 +1,27 @@
-import { useMemo, useState } from "react";
+import { memo, useState } from "react";
 
 const App = () => {
-  // problem is across render sum is calculated
-  // again and again which shouldnt happen
-  const [number, setNumber] = useState(0);
   const [count, setCount] = useState(0);
 
-  // compute when it changes only
-
-  let sum = useMemo(() => {
-    let finalsum = 0;
-    for (let i = 0; i <= number; i++) {
-      finalsum = finalsum + i;
-    }
-    return finalsum;
-  }, [number]);
-
+  function onClick() {
+    console.log("child clicked");
+  }
   return (
     <div>
-      <input
-        type="number"
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
-      />
-      <h1>Sum is {sum}</h1>
-
-      <button value={count} onClick={() => setCount((e) => e + 1)}>
-        count is ({count})
-      </button>
+      <Child onClick={onClick} />
+      <button onClick={() => setCount((e) => e + 1)}>{count} bdhao</button>
     </div>
   );
 };
 
 export default App;
+
+const Child = memo(({ onClick }) => {
+  console.log("button clicked");
+  return (
+    <div>
+      <button onClick={onClick}>button clicked</button>
+    </div>
+  );
+});
+Child.displayName = "Child";
