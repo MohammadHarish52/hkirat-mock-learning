@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 
 const App = () => {
+  // problem is across render sum is calculated
+  // again and again which shouldnt happen
   const [number, setNumber] = useState(0);
   const [count, setCount] = useState(0);
 
-  let sum = 0;
+  // compute when it changes only
 
-  for (let i = 0; i <= number; i++) {
-    sum = i + sum;
-  }
+  let sum = useMemo(() => {
+    let finalsum = 0;
+    for (let i = 0; i <= number; i++) {
+      finalsum = finalsum + i;
+    }
+    return finalsum;
+  }, [number]);
+
   return (
     <div>
       <input
