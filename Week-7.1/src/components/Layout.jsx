@@ -11,8 +11,12 @@ const Layout = ({ children }) => {
           justifyContent: "center",
         }}
       >
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+        <Link to="/about">
+          <button>About</button>
+        </Link>
       </div>
       {children}
     </div>
