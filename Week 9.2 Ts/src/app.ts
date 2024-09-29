@@ -1,20 +1,6 @@
-// enum is used to define constants
-
-// explicity defining values
-
-enum Direction {
-  up = "up",
-  left = "left",
-  down = "down",
-  right = "right",
+function identity<T>(arg: T): T {
+  return arg;
 }
 
-function doSomething(keypress: Direction) {
-  if (keypress === Direction.up) {
-  }
-}
-
-doSomething(Direction.left);
-doSomething(Direction.right);
-doSomething(Direction.up);
-console.log(Direction.down);
+let output1 = identity<string>("myString");
+let output2 = identity<number>(100);
