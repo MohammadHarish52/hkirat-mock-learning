@@ -1,10 +1,12 @@
 // enum is used to define constants
 
+// explicity defining values
+
 enum Direction {
-  up,
-  left,
-  down,
-  right,
+  up = "up",
+  left = "left",
+  down = "down",
+  right = "right",
 }
 
 function doSomething(keypress: Direction) {
@@ -15,3 +17,4 @@ function doSomething(keypress: Direction) {
 doSomething(Direction.left);
 doSomething(Direction.right);
 doSomething(Direction.up);
+console.log(Direction.down);
